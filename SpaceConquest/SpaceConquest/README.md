@@ -35,7 +35,3 @@
     - [ ] Expand the navigation logic to include different difficulty levels with varying chances of encountering asteroids and minerals.
     - [ ] Introduce a scoring system based on collected minerals and remaining hull strength.
  
-
-
-#  <#Title#>
-
