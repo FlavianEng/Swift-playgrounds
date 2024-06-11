@@ -1,35 +1,45 @@
 class Character {
+    let name: String
     let emoji: String?
-    let isPlayer: Bool
     let logger: Logger
+    let prefix: String
+    let theme: Theme
 
-    init(emoji: String?, isPlayer: Bool, logger: Logger) {
+    init(name: String, emoji: String?, theme: Theme) {
         self.emoji = emoji
-        self.isPlayer = isPlayer
-        self.logger = logger
+        self.logger = Logger(theme: theme)
+        self.name = name
+        self.theme = theme
+
+        if let definedEmoji = emoji {
+            self.prefix = "\(definedEmoji) \(name) > "
+            return
+        }
+
+        self.prefix = ""
     }
 
     func speak(words: String) {
-        print("\(escapeCharacter)[0;1m\(words)")
+        logger.coloredPrint("\(prefix + words)")
+    }
+
+    func ask(question message: String, answerOnceAnswered confirmMessage: String) -> String {
+        return logger.inputString(message: "\(prefix + message)", confirmMessage: "\(prefix + confirmMessage)")
     }
 }
 
 class Captain: Character {
     convenience init() {
-            self.init(emoji: "🧑", isPlayer: true, logger: Logger())
-    }
-
-    override func speak(words: String) {
-        print("\(escapeCharacter)[0;1;38;5;45m    \(words) <\(emoji!)")
+        self.init(name: "You", emoji: "🧑", theme: Theme(graphicMode: .bold, foregroundColor: .pastelBlue, backgroundColor: nil))
     }
 }
 
-class Narrator: Character {
+class FirstMate: Character {
     convenience init() {
-        self.init(emoji: "👤", isPlayer: true, logger: Logger())
+        self.init(name: "First mate", emoji: "👤", theme: Theme(graphicMode: .bold, foregroundColor: .deepBlack, backgroundColor: .pastelYellow))
     }
 
-    override func speak(words: String) {
-        print("\(escapeCharacter)[0;1;38;5;232;48;5;11m\(emoji!)> \(words)")
+    override func ask(question message: String, answerOnceAnswered confirmMessage: String) -> String {
+        return logger.inputString(message: "\(prefix + message)", confirmMessage: "\(prefix + confirmMessage)", errorMessage: "You can't be serious! What's the real spaceship name Captain?")
     }
 }
