@@ -15,8 +15,9 @@ class GameEngine {
         logger.displayTitle()
         let spaceshipName = firstMate.ask(question: "Aye Aye, name your spaceship Captain!", answerOnceAnswered: "Aye Aye Captain!")
 
-        player.speak(words: "Nice to meet you!")
+        self.spaceship = Spaceship(name: spaceshipName, logger: logger)
 
-        self.spaceship = Spaceship(name: spaceshipName)
+        firstMate.speak(words: "Here's the info about your spaceship!")
+        spaceship.displayStatus()
     }
 }

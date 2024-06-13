@@ -13,12 +13,11 @@ enum xtermColors: String {
     case magenta = "5"
     case cyan = "6"
     case white = "255"
-    case systemForeground = "39"
-    case systemBackground = "49"
     case pastelYellow = "11"
     case pastelBlue = "12"
     case brightBlue = "45"
     case deepBlack = "232"
+    case deepBlue = "25"
 }
 
 enum  graphicMode: String {
@@ -44,7 +43,7 @@ class Logger {
 
     func displayTitle() {
         let starTheme = Theme(graphicMode: nil, foregroundColor: .pastelYellow, backgroundColor: nil)
-let starStyle = getStyle(starTheme)
+        let starStyle = getStyle(starTheme)
 
         print("""
 \(starStyle)
@@ -61,18 +60,18 @@ let starStyle = getStyle(starTheme)
     }
 
     func inputString(message: String, confirmMessage: String?, errorMessage: String = "Please enter a valid string") -> String {
-        coloredPrint(message)
+        themedPrint(message)
         let optionalString = readLine()
 
         if let string = optionalString, string.contains(/\w+/) {
             if let confirmMessage = confirmMessage {
-                coloredPrint(confirmMessage)
+                themedPrint(confirmMessage)
             }
 
             return string
         }
 
-        coloredPrint(errorMessage)
+        themedPrint(errorMessage)
         return inputString(message: message, confirmMessage: confirmMessage)
     }
 
@@ -81,8 +80,38 @@ let starStyle = getStyle(starTheme)
         print("\u{1B}[H") // Moves the cursor to the home position (top-left corner).
     }
 
-    func coloredPrint(_ message: String) {
-        print("\(getStyle(theme))\(message)\(resetStyles())")
+    func themedPrint(_ messages: String..., themes: Theme...) {
+        guard !messages.isEmpty else {
+            return
+        }
+
+        var defaultTheme = self.theme
+        var stringToPrint = ""
+
+        if !themes.isEmpty {
+            defaultTheme = themes[0]
+        }
+
+        messages.enumerated().forEach { (index, message) in
+            var messageTheme = defaultTheme
+            if themes.indices.contains(index) {
+                messageTheme = themes[index]
+            }
+
+            stringToPrint += getThemedString(message, theme: messageTheme)
+        }
+
+        print(stringToPrint)
+    }
+
+    func getThemedString(_ message: String, theme: Theme? = nil) -> String {
+        var themeToUse = self.theme
+
+        if let givenTheme = theme {
+            themeToUse = givenTheme
+        }
+
+        return "\(getStyle(themeToUse))\(message)\(resetStyles())"
     }
 
     func getStyle(_ theme: Theme) -> String {
@@ -115,5 +144,9 @@ let starStyle = getStyle(starTheme)
 
     func resetStyles() -> String {
         return "\(escapeCharacter)[0m"
+    }
+
+    func newLine() {
+        print("\n")
     }
 }

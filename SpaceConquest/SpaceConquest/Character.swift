@@ -20,7 +20,7 @@ class Character {
     }
 
     func speak(words: String) {
-        logger.coloredPrint("\(prefix + words)")
+        logger.themedPrint("\(prefix + words)")
     }
 
     func ask(question message: String, answerOnceAnswered confirmMessage: String) -> String {

@@ -1,10 +1,12 @@
 class Spaceship {
     let name: String
+    let logger: Logger
     var hullStrength: Int = 50
     var cargoHold: [String: Int] = [:]
 
-    init(name: String) {
+    init(name: String, logger: Logger) {
         self.name = name
+        self.logger = logger
     }
 
     func takeDamage(amount: Int) {
@@ -22,10 +24,13 @@ class Spaceship {
     }
 
     func displayStatus() {
-        print("""
-        ** \(name) Spaceship **
-        Hull strength: \(hullStrength)
-        Cargo hold: \(cargoHold.values)
-        """)
+        let blackOnWhiteTheme = Theme(graphicMode: .bold, foregroundColor: .deepBlack, backgroundColor: .white)
+        let blueOnWhiteTheme = Theme(graphicMode: .bold, foregroundColor: .deepBlue, backgroundColor: .white)
+        let itemTitle = Theme(graphicMode: .bold, foregroundColor: nil, backgroundColor: nil)
+
+        logger.newLine()
+        logger.themedPrint(" ** ", name, " ** ", themes: blackOnWhiteTheme, blueOnWhiteTheme)
+        logger.themedPrint("Hull strength: ", String(hullStrength), themes: itemTitle, logger.theme)
+        logger.themedPrint("Cargo hold: ", "Empty", themes: itemTitle, logger.theme)
     }
 }
