@@ -32,5 +32,7 @@ class Spaceship {
         logger.themedPrint(" ** ", name, " ** ", themes: blackOnWhiteTheme, blueOnWhiteTheme)
         logger.themedPrint("Hull strength: ", String(hullStrength), themes: itemTitle, logger.theme)
         logger.themedPrint("Cargo hold: ", "Empty", themes: itemTitle, logger.theme)
+
+        logger.pause()
     }
 }

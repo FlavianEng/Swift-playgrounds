@@ -23,8 +23,8 @@ class Character {
         logger.themedPrint("\(prefix + words)")
     }
 
-    func ask(question message: String, answerOnceAnswered confirmMessage: String) -> String {
-        return logger.inputString(message: "\(prefix + message)", confirmMessage: "\(prefix + confirmMessage)")
+    func ask(question message: String, answerOnceAnswered confirmMessage: String, inputName: String = "", errorMessage: String = "What?") -> String {
+        return logger.inputString(message: "\(prefix + message)", confirmMessage: "\(prefix + confirmMessage)", inputName: inputName, errorMessage: errorMessage)
     }
 }
 
@@ -37,9 +37,5 @@ class Captain: Character {
 class FirstMate: Character {
     convenience init() {
         self.init(name: "First mate", emoji: "👤", theme: Theme(graphicMode: .bold, foregroundColor: .deepBlack, backgroundColor: .pastelYellow))
-    }
-
-    override func ask(question message: String, answerOnceAnswered confirmMessage: String) -> String {
-        return logger.inputString(message: "\(prefix + message)", confirmMessage: "\(prefix + confirmMessage)", errorMessage: "You can't be serious! What's the real spaceship name Captain?")
     }
 }

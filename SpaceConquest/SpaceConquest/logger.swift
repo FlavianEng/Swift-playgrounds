@@ -26,13 +26,16 @@ enum  graphicMode: String {
     case italic = "3"
 }
 
-let escapeCharacter = "\u{001B}"
-
 struct Theme {
     var graphicMode: graphicMode?
     var foregroundColor: xtermColors?
     var backgroundColor: xtermColors?
 }
+
+let nilTheme = Theme(graphicMode: nil, foregroundColor: nil, backgroundColor: nil)
+
+let escapeCharacter = "\u{1B}"
+let blinkingCursor = "\(escapeCharacter)[1 q\(escapeCharacter)[?25h"
 
 class Logger {
     let theme: Theme
@@ -59,8 +62,10 @@ class Logger {
 """)
     }
 
-    func inputString(message: String, confirmMessage: String?, errorMessage: String = "Please enter a valid string") -> String {
+    func inputString(message: String, confirmMessage: String?, inputName: String = "", errorMessage: String = "Please enter a valid string") -> String {
         themedPrint(message)
+        themedPrint("\(inputName): \(blinkingCursor)", themes: nilTheme, terminator: "")
+
         let optionalString = readLine()
 
         if let string = optionalString, string.contains(/\w+/) {
@@ -75,12 +80,17 @@ class Logger {
         return inputString(message: message, confirmMessage: confirmMessage)
     }
 
-    func clearConsole() {
-        print("\u{1B}[2J") // Clears the entire screen.
-        print("\u{1B}[H") // Moves the cursor to the home position (top-left corner).
+    func pause() {
+        themedPrint("\nPress any key to continue...", themes: Theme(graphicMode: .dim, foregroundColor: nil, backgroundColor: nil))
+        readLine()
     }
 
-    func themedPrint(_ messages: String..., themes: Theme...) {
+    func clearConsole() {
+        print("\(escapeCharacter)[2J") // Clears the entire screen.
+        print("\(escapeCharacter)[H") // Moves the cursor to the home position (top-left corner).
+    }
+
+    func themedPrint(_ messages: String..., themes: Theme..., terminator: String = "\n") {
         guard !messages.isEmpty else {
             return
         }
@@ -101,7 +111,7 @@ class Logger {
             stringToPrint += getThemedString(message, theme: messageTheme)
         }
 
-        print(stringToPrint)
+        print(stringToPrint, terminator: terminator)
     }
 
     func getThemedString(_ message: String, theme: Theme? = nil) -> String {
