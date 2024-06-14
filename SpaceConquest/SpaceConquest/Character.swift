@@ -12,7 +12,7 @@ class Character {
         self.theme = theme
 
         if let definedEmoji = emoji {
-            self.prefix = "\(definedEmoji) \(name) > "
+            self.prefix = logger.getThemedString("\(definedEmoji) \(name) > ", theme: theme)
             return
         }
 
@@ -20,11 +20,11 @@ class Character {
     }
 
     func speak(words: String) {
-        logger.themedPrint("\(prefix + words)")
+        logger.themedPrint("\(prefix) \(words)")
     }
 
     func ask(question message: String, answerOnceAnswered confirmMessage: String, inputName: String = "", errorMessage: String = "What?") -> String {
-        return logger.inputString(message: "\(prefix + message)", confirmMessage: "\(prefix + confirmMessage)", inputName: inputName, errorMessage: errorMessage)
+        return logger.inputString(message: "\(prefix + " " + message)", confirmMessage: "\(prefix + " " + confirmMessage)", inputName: inputName, errorMessage: errorMessage)
     }
 }
 
@@ -36,6 +36,6 @@ class Captain: Character {
 
 class FirstMate: Character {
     convenience init() {
-        self.init(name: "First mate", emoji: "👤", theme: Theme(graphicMode: .bold, foregroundColor: .deepBlack, backgroundColor: .pastelYellow))
+        self.init(name: "First mate", emoji: "👤", theme: Theme(graphicMode: .bold, foregroundColor: .deepBlack, backgroundColor: .yellow))
     }
 }

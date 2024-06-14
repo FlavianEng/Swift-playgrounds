@@ -1,5 +1,9 @@
 import Foundation
 
+enum LoggerError: Error {
+    case emptyArray
+}
+
 /// Documentation
 /// https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797#colors--graphics-mode
 
@@ -33,6 +37,7 @@ struct Theme {
 }
 
 let nilTheme = Theme(graphicMode: nil, foregroundColor: nil, backgroundColor: nil)
+let errorTheme = Theme(graphicMode: .bold, foregroundColor: .red, backgroundColor: .deepBlack)
 
 let escapeCharacter = "\u{1B}"
 let blinkingCursor = "\(escapeCharacter)[1 q\(escapeCharacter)[?25h"
@@ -45,6 +50,7 @@ class Logger {
     }
 
     func displayTitle() {
+        clearConsole()
         let starTheme = Theme(graphicMode: nil, foregroundColor: .pastelYellow, backgroundColor: nil)
         let starStyle = getStyle(starTheme)
 
@@ -60,6 +66,7 @@ class Logger {
  *~*.*  *~*.*  *~*.*  *~*.*  *~*.*  *~*.*  *~*.*
 ~*.*~  ~*.*~  ~*.*~  ~*.*~  ~*.*~  ~*.*~  ~*.*~
 """)
+        pause()
     }
 
     func inputString(message: String, confirmMessage: String?, inputName: String = "", errorMessage: String = "Please enter a valid string") -> String {
@@ -80,9 +87,31 @@ class Logger {
         return inputString(message: message, confirmMessage: confirmMessage)
     }
 
+    func inputRange(acceptedValues range: [String]) throws -> Int {
+        guard !range.isEmpty else {
+            throw LoggerError.emptyArray
+        }
+
+        themedPrint("Please enter a value between \(range.indices.first! + 1) and \(range.indices.last! + 1)")
+        themedPrint(blinkingCursor, themes: nilTheme, terminator: "")
+
+        let optionalString = readLine()
+
+        guard let string = optionalString else {
+            return try inputRange(acceptedValues: range)
+        }
+
+        if let index = Int(string), range.indices.contains(index - 1) {
+            return index - 1
+        }
+
+        return try inputRange(acceptedValues: range)
+    }
+
     func pause() {
-        themedPrint("\nPress any key to continue...", themes: Theme(graphicMode: .dim, foregroundColor: nil, backgroundColor: nil))
-        readLine()
+        themedPrint("\nPress enter to continue...", themes: Theme(graphicMode: .dim, foregroundColor: nil, backgroundColor: nil))
+        _ = readLine()
+        clearConsole()
     }
 
     func clearConsole() {

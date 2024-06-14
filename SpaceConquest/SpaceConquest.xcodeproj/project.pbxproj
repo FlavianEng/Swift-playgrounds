@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D1E4C4D2C1C9154004543C0 /* asteroid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1E4C4C2C1C9154004543C0 /* asteroid.swift */; };
 		2DA7B5E22C183EE4000239FB /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA7B5E12C183EE4000239FB /* main.swift */; };
 		2DA7B5E92C183F63000239FB /* spaceship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA7B5E82C183F63000239FB /* spaceship.swift */; };
 		2DA7B5EB2C183F6F000239FB /* mineral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA7B5EA2C183F6F000239FB /* mineral.swift */; };
 		2DA7B5ED2C183F7B000239FB /* logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA7B5EC2C183F7B000239FB /* logger.swift */; };
 		2DA7B5EF2C183F81000239FB /* gameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA7B5EE2C183F81000239FB /* gameEngine.swift */; };
-		2DA7B5F12C183F8C000239FB /* gameAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA7B5F02C183F8C000239FB /* gameAction.swift */; };
 		2DA7B5F42C1870A8000239FB /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA7B5F32C1870A8000239FB /* Character.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,13 +29,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2D1E4C4C2C1C9154004543C0 /* asteroid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = asteroid.swift; path = SpaceConquest/asteroid.swift; sourceTree = SOURCE_ROOT; };
 		2DA7B5DE2C183EE4000239FB /* spaceConquest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = spaceConquest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DA7B5E12C183EE4000239FB /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		2DA7B5E82C183F63000239FB /* spaceship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spaceship.swift; sourceTree = "<group>"; };
 		2DA7B5EA2C183F6F000239FB /* mineral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mineral.swift; sourceTree = "<group>"; };
 		2DA7B5EC2C183F7B000239FB /* logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = logger.swift; sourceTree = "<group>"; };
 		2DA7B5EE2C183F81000239FB /* gameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gameEngine.swift; sourceTree = "<group>"; };
-		2DA7B5F02C183F8C000239FB /* gameAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gameAction.swift; sourceTree = "<group>"; };
 		2DA7B5F22C183F96000239FB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2DA7B5F32C1870A8000239FB /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,10 +72,10 @@
 			children = (
 				2DA7B5E12C183EE4000239FB /* main.swift */,
 				2DA7B5E82C183F63000239FB /* spaceship.swift */,
+				2D1E4C4C2C1C9154004543C0 /* asteroid.swift */,
 				2DA7B5EA2C183F6F000239FB /* mineral.swift */,
 				2DA7B5EC2C183F7B000239FB /* logger.swift */,
 				2DA7B5EE2C183F81000239FB /* gameEngine.swift */,
-				2DA7B5F02C183F8C000239FB /* gameAction.swift */,
 				2DA7B5F22C183F96000239FB /* README.md */,
 				2DA7B5F32C1870A8000239FB /* Character.swift */,
 			);
@@ -144,9 +144,9 @@
 				2DA7B5E92C183F63000239FB /* spaceship.swift in Sources */,
 				2DA7B5F42C1870A8000239FB /* Character.swift in Sources */,
 				2DA7B5E22C183EE4000239FB /* main.swift in Sources */,
+				2D1E4C4D2C1C9154004543C0 /* asteroid.swift in Sources */,
 				2DA7B5EB2C183F6F000239FB /* mineral.swift in Sources */,
 				2DA7B5ED2C183F7B000239FB /* logger.swift in Sources */,
-				2DA7B5F12C183F8C000239FB /* gameAction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

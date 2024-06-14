@@ -1,3 +1,4 @@
+// TODO: Move player and first mate in a new "Crew" property in spaceship
 class Spaceship {
     let name: String
     let logger: Logger
@@ -32,7 +33,23 @@ class Spaceship {
         logger.themedPrint(" ** ", name, " ** ", themes: blackOnWhiteTheme, blueOnWhiteTheme)
         logger.themedPrint("Hull strength: ", String(hullStrength), themes: itemTitle, logger.theme)
         logger.themedPrint("Cargo hold: ", "Empty", themes: itemTitle, logger.theme)
+    }
 
-        logger.pause()
+    func navigate() -> Bool {
+        let asteroid = Asteroid()
+        takeDamage(amount: asteroid.inflictedDamage)
+
+        print("You've taken \(asteroid.inflictedDamage) damage\(asteroid.inflictedDamage > 1 ? "s" : "")")
+
+        if hullStrength <= 0 {
+            explode()
+            return true
+        }
+
+        return false
+    }
+
+    private func explode() {
+        logger.themedPrint("\n💀 Your spaceship explode and no one will remember you ", themes: Theme(graphicMode: .bold, foregroundColor: .red, backgroundColor: .deepBlack))
     }
 }
