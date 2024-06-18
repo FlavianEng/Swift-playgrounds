@@ -87,7 +87,27 @@ class Logger {
         return inputString(message: message, confirmMessage: confirmMessage)
     }
 
-    func inputRange( acceptedValues: [String], excludedValues: [String] = []) throws -> Int {
+    func inputNumber(message: String, errorMessage: String = "Please enter a valid number", defaultValue: Int? = nil) -> Int {
+        themedPrint(message, "\(defaultValue == nil ? "" : " – Default = \(defaultValue!)")")
+        themedPrint(blinkingCursor, themes: nilTheme, terminator: "")
+
+        let optionalString = readLine()
+
+        if let string = optionalString {
+            if let integer = Int(string), integer > 1 {
+                return integer
+            }
+        }
+
+        if let fallbackValue = defaultValue, fallbackValue > 0 {
+            return fallbackValue
+        }
+
+        themedPrint(errorMessage)
+        return inputNumber(message: message, errorMessage: errorMessage)
+    }
+
+    func inputRange( acceptedValues: [String], excludedValues: [String] = [], message: String? = nil, defaultValue: Int? = nil) throws -> Int {
         guard !acceptedValues.isEmpty else {
             throw LoggerError.emptyArray
         }
@@ -101,18 +121,26 @@ class Logger {
             validInputs.append(index)
         }
 
-        themedPrint("Please enter a value among \(validInputs.map {$0 + 1})")
+        themedPrint("\(message == nil ? "Please enter a value among \(validInputs.map {$0 + 1})" : "\(message!) – Accepted inputs: \(validInputs.map {$0 + 1})")", "\(defaultValue != nil ? " – Default: \(defaultValue!)": "") ")
         themedPrint(blinkingCursor, themes: nilTheme, terminator: "")
 
         let optionalString = readLine()
 
         guard let string = optionalString else {
+            if let fallbackValue = defaultValue {
+                return fallbackValue
+            }
+
             print("Input not valid")
             return try inputRange(acceptedValues: acceptedValues, excludedValues: excludedValues)
         }
 
         if let index = Int(string), validInputs.contains(index - 1) {
             return index - 1
+        }
+
+        if let fallbackValue = defaultValue {
+            return fallbackValue
         }
 
         print("Input not valid")

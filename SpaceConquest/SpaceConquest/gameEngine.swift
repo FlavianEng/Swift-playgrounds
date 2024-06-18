@@ -55,8 +55,13 @@ class GameEngine {
         do {
             let action = try logger.inputRange(acceptedValues: GameAction.allCases.map {$0.rawValue})
 
+            var times = 1
+            if GameAction.allCases[action] == .navigateAndCollectMinerals {
+                times = logger.inputNumber(message: "How many times do you want to repeat action?", defaultValue: 1)
+            }
+
             logger.clearConsole()
-            doAction(action: GameAction.allCases[action], asteroid: &asteroid)
+            doAction(action: GameAction.allCases[action], asteroid: &asteroid, repeatAction: Int(times))
         } catch {
             broken()
         }
