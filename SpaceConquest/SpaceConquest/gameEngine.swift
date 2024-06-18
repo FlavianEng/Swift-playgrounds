@@ -57,8 +57,8 @@ class GameEngine {
         }
 
         do {
-            // TODO: Add excluded actions
-            let action = try logger.inputRange(acceptedValues: GameAction.allCases.map {$0.rawValue})
+            let excludedActions = asteroid.hasBeenCollected ? [GameAction.collectMineral.rawValue] : []
+            let action = try logger.inputRange(acceptedValues: GameAction.allCases.map {$0.rawValue}, excludedValues: excludedActions)
 
             logger.clearConsole()
             doAction(action: GameAction.allCases[action], asteroid: &asteroid)
@@ -86,7 +86,9 @@ class GameEngine {
             break
 
         case .collectMineral:
-            spaceship.collectMineral(asteroid: asteroid)
+            player.speak(words: "I want to \(action.rawValue.lowercased())\n")
+            let (numberCollected, mineralType) = spaceship.collectMineral(asteroid: asteroid)
+            firstMate.speak(words: "You've harvest \(numberCollected) of \(mineralType.name)")
             break
 
         case .goHome:

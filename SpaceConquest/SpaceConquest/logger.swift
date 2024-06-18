@@ -87,25 +87,36 @@ class Logger {
         return inputString(message: message, confirmMessage: confirmMessage)
     }
 
-    func inputRange(acceptedValues range: [String]) throws -> Int {
-        guard !range.isEmpty else {
+    func inputRange( acceptedValues: [String], excludedValues: [String] = []) throws -> Int {
+        guard !acceptedValues.isEmpty else {
             throw LoggerError.emptyArray
         }
 
-        themedPrint("Please enter a value between \(range.indices.first! + 1) and \(range.indices.last! + 1)")
+        var validInputs: [Int] = []
+        for (index, value) in acceptedValues.enumerated() {
+            if (excludedValues.contains {$0 == value}) {
+                continue
+            }
+
+            validInputs.append(index)
+        }
+
+        themedPrint("Please enter a value among \(validInputs.map {$0 + 1})")
         themedPrint(blinkingCursor, themes: nilTheme, terminator: "")
 
         let optionalString = readLine()
 
         guard let string = optionalString else {
-            return try inputRange(acceptedValues: range)
+            print("Input not valid")
+            return try inputRange(acceptedValues: acceptedValues, excludedValues: excludedValues)
         }
 
-        if let index = Int(string), range.indices.contains(index - 1) {
+        if let index = Int(string), validInputs.contains(index - 1) {
             return index - 1
         }
 
-        return try inputRange(acceptedValues: range)
+        print("Input not valid")
+        return try inputRange(acceptedValues: acceptedValues, excludedValues: excludedValues)
     }
 
     func pause() {

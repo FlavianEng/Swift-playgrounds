@@ -57,7 +57,7 @@ class Spaceship {
         return false
     }
 
-    func collectMineral(asteroid: Asteroid) {
+    func collectMineral(asteroid: Asteroid) -> (Int, Mineral) {
         let (numberCollected, mineralType) = asteroid.mineVein()
 
         if cargoHold[mineralType.name] == nil {
@@ -67,6 +67,8 @@ class Spaceship {
         if let numberInStock = cargoHold[mineralType.name] {
             cargoHold[mineralType.name] = numberInStock + numberCollected
         }
+
+        return (numberCollected, mineralType)
     }
 
     private func explode() {

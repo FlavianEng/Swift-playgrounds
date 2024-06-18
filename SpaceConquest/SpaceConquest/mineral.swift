@@ -16,25 +16,25 @@ class Iron: Mineral {
 
 class Feldspar: Mineral {
     convenience init() {
-        self.init(name: "Feldspar", value: 3)
+        self.init(name: "Feldspar", value: 5)
     }
 }
 
 class Olivine: Mineral {
     convenience init() {
-        self.init(name: "Olivine", value: 5)
+        self.init(name: "Olivine", value: 15)
     }
 }
 
 class Sphalerite: Mineral {
     convenience init() {
-        self.init(name: "Sphalerite", value: 7)
+        self.init(name: "Sphalerite", value: 25)
     }
 }
 
 class Palladium: Mineral {
     convenience init() {
-        self.init(name: "Palladium", value: 8)
+        self.init(name: "Palladium", value: 35)
     }
 }
 
