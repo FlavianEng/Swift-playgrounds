@@ -32,11 +32,19 @@ class Spaceship {
         logger.newLine()
         logger.themedPrint(" ** ", name, " ** ", themes: blackOnWhiteTheme, blueOnWhiteTheme)
         logger.themedPrint("Hull strength: ", String(hullStrength), themes: itemTitle, logger.theme)
-        logger.themedPrint("Cargo hold: ", "Empty", themes: itemTitle, logger.theme)
+        logger.themedPrint("Cargo hold: ", themes: itemTitle)
+
+        if cargoHold.isEmpty {
+            logger.themedPrint("  Your cargo hold is empty")
+            return
+        }
+
+        for (mineral, numberInStock) in cargoHold {
+            logger.themedPrint("  - ", "\(mineral.capitalized): ", String(numberInStock), themes: logger.theme, itemTitle, logger.theme)
+        }
     }
 
-    func navigate() -> Bool {
-        let asteroid = Asteroid()
+    func navigate(asteroid: Asteroid) -> Bool {
         takeDamage(amount: asteroid.inflictedDamage)
 
         print("You've taken \(asteroid.inflictedDamage) damage\(asteroid.inflictedDamage > 1 ? "s" : "")")
@@ -47,6 +55,18 @@ class Spaceship {
         }
 
         return false
+    }
+
+    func collectMineral(asteroid: Asteroid) {
+        let (numberCollected, mineralType) = asteroid.mineVein()
+
+        if cargoHold[mineralType.name] == nil {
+            cargoHold[mineralType.name] = 0
+        }
+
+        if let numberInStock = cargoHold[mineralType.name] {
+            cargoHold[mineralType.name] = numberInStock + numberCollected
+        }
     }
 
     private func explode() {

@@ -1,5 +1,6 @@
 enum GameAction: String, CaseIterable {
     case navigate = "Navigate through asteroids"
+    case collectMineral = "Collect mineral"
     case viewCargo = "View Cargo – See your inventory"
     case goHome = "Go home – Repair spaceship"
     case exitGame = "Exit Game"
@@ -11,21 +12,19 @@ class GameEngine {
     let logger: Logger
     let firstMate: FirstMate
     let player: Captain
-    let minerals: [Mineral] = [Iron(), Quartz(), Feldspar(), Pyroxene(), Olivine(), Galena(), Sphalerite(), Palladium(), Painite(), Claudite()]
+    let minerals: [Mineral] = [Iron(), Feldspar(), Olivine(), Sphalerite(), Palladium(), Claudite()]
+    var asteroid: Asteroid
 
     init() {
         self.logger = Logger(theme: nilTheme)
         self.firstMate = FirstMate()
         self.player = Captain()
+        self.asteroid = Asteroid()
 
         logger.displayTitle()
         let spaceshipName = firstMate.ask(question: "Aye Aye, name your spaceship Captain!", answerOnceAnswered: "Aye Aye Captain!", inputName: "Spaceship name", errorMessage: "You can't be serious! What's the real spaceship name Captain!")
 
         self.spaceship = Spaceship(name: spaceshipName, logger: logger)
-
-        firstMate.speak(words: "Here's the info about your spaceship!")
-        spaceship.displayStatus()
-        logger.pause()
 
         start()
     }
@@ -44,25 +43,31 @@ class GameEngine {
     }
 
     func chooseAction() {
+        let indexTheme = Theme(graphicMode: .bold, foregroundColor: nil, backgroundColor: nil)
+
         firstMate.speak(words: "What do you want to do Captain?\n")
 
-        GameAction.allCases.enumerated().forEach { (index, action) in
+        for (index, action) in GameAction.allCases.enumerated() {
             let actionNumber = index + 1
+            if action == .collectMineral && asteroid.hasBeenCollected {
+                continue
+            }
 
-            print("\(actionNumber). \(action.rawValue)")
+            logger.themedPrint("\(actionNumber). ", action.rawValue, themes: indexTheme, nilTheme)
         }
 
         do {
+            // TODO: Add excluded actions
             let action = try logger.inputRange(acceptedValues: GameAction.allCases.map {$0.rawValue})
 
             logger.clearConsole()
-            doAction(action: GameAction.allCases[action])
+            doAction(action: GameAction.allCases[action], asteroid: &asteroid)
         } catch {
             broken()
         }
     }
 
-    func doAction(action: GameAction) {
+    func doAction(action: GameAction, asteroid: inout Asteroid) {
         switch action {
         case .viewCargo:
             player.speak(words: "I want to \(action.rawValue.lowercased())")
@@ -71,11 +76,17 @@ class GameEngine {
 
         case .navigate:
             player.speak(words: "I want to \(action.rawValue.lowercased())\n")
-            let hasExploded = spaceship.navigate()
+            let hasExploded = spaceship.navigate(asteroid: asteroid)
 
             if hasExploded {
                 isStarted = false
             }
+
+            asteroid = Asteroid()
+            break
+
+        case .collectMineral:
+            spaceship.collectMineral(asteroid: asteroid)
             break
 
         case .goHome:

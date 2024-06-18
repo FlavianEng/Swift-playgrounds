@@ -25,10 +25,10 @@
  
 ## Tasks
  - [x] Use the Spaceship initializer to create a spaceship with a desired name.
- - [ ] Simulate the ongoing space exploration. (description below)
+ - [x] Simulate the ongoing space exploration. (description below)
    > While exploring, present the player with options (e.g., "Navigate", "View Cargo", "Exit").
    > Based on the user's choice, call appropriate methods on the spaceship object (e.g., navigate - simulate dodging asteroids with a chance of taking damage, view cargo - call displayStatus, exit - terminate the loop).       
- - [ ] Introduce mineral collection events during navigation (randomly generate mineral types and quantities, use collectMineral on the spaceship) – maybe with a chance of failing.
+ - [x] Introduce mineral collection events during navigation (randomly generate mineral types and quantities, use collectMineral on the spaceship) – maybe with a chance of failing.
 
  * Bonus *
     - [x] Add a Mineral class to represent different minerals with varying values.

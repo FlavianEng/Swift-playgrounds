@@ -14,33 +14,15 @@ class Iron: Mineral {
     }
 }
 
-class Quartz: Mineral {
-    convenience init() {
-        self.init(name: "Quartz", value: 2)
-    }
-}
-
 class Feldspar: Mineral {
     convenience init() {
         self.init(name: "Feldspar", value: 3)
     }
 }
 
-class Pyroxene: Mineral {
-    convenience init() {
-        self.init(name: "Pyroxene", value: 4)
-    }
-}
-
 class Olivine: Mineral {
     convenience init() {
         self.init(name: "Olivine", value: 5)
-    }
-}
-
-class Galena: Mineral {
-    convenience init() {
-        self.init(name: "Galena", value: 6)
     }
 }
 
@@ -56,14 +38,8 @@ class Palladium: Mineral {
     }
 }
 
-class Painite: Mineral {
-    convenience init() {
-        self.init(name: "Painite", value: 9)
-    }
-}
-
 class Claudite: Mineral {
     convenience init() {
-        self.init(name: "Claudite", value: 10)
+        self.init(name: "Claudite", value: 50)
     }
 }
