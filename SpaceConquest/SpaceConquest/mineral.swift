@@ -1,10 +1,20 @@
-class Mineral {
+class Mineral: Hashable {
     let name: String
     let value: Int
 
     init(name: String, value: Int) {
         self.name = name
         self.value = value
+    }
+
+    // Implement the hash function based on the name property
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+    }
+
+    // Implement the equality operator to check if names are equal
+    static func == (lhs: Mineral, rhs: Mineral) -> Bool {
+        return lhs.name == rhs.name
     }
 }
 

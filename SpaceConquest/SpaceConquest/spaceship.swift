@@ -3,7 +3,7 @@ class Spaceship {
     let name: String
     let logger: Logger
     var hullStrength: Int = 50
-    var cargoHold: [String: Int] = [:]
+    var cargoHold: [Mineral: Int] = [:]
 
     init(name: String, logger: Logger) {
         self.name = name
@@ -12,16 +12,6 @@ class Spaceship {
 
     func takeDamage(amount: Int) {
         hullStrength -= amount
-    }
-
-    func collectMineral(name: String, quantity: Int) {
-        if var mineralStock = cargoHold[name] {
-            mineralStock += quantity
-
-            return
-        }
-
-        cargoHold[name] = quantity
     }
 
     func displayStatus() {
@@ -40,7 +30,7 @@ class Spaceship {
         }
 
         for (mineral, numberInStock) in cargoHold {
-            logger.themedPrint("  - ", "\(mineral.capitalized): ", String(numberInStock), themes: logger.theme, itemTitle, logger.theme)
+            logger.themedPrint("  - ", "\(mineral.name.capitalized): ", String(numberInStock), themes: logger.theme, itemTitle, logger.theme)
         }
     }
 
@@ -60,12 +50,12 @@ class Spaceship {
     func collectMineral(asteroid: Asteroid) -> (Int, Mineral) {
         let (numberCollected, mineralType) = asteroid.mineVein()
 
-        if cargoHold[mineralType.name] == nil {
-            cargoHold[mineralType.name] = 0
+        if cargoHold[mineralType] == nil {
+            cargoHold[mineralType] = 0
         }
 
-        if let numberInStock = cargoHold[mineralType.name] {
-            cargoHold[mineralType.name] = numberInStock + numberCollected
+        if let numberInStock = cargoHold[mineralType] {
+            cargoHold[mineralType] = numberInStock + numberCollected
         }
 
         return (numberCollected, mineralType)
@@ -73,5 +63,19 @@ class Spaceship {
 
     private func explode() {
         logger.themedPrint("\n💀 Your spaceship explode and no one will remember you ", themes: Theme(graphicMode: .bold, foregroundColor: .red, backgroundColor: .deepBlack))
+
+        calculateScore()
+    }
+
+    public func calculateScore() {
+        var score = 0
+
+        for (mineral, quantity) in cargoHold {
+            score += mineral.value * quantity
+        }
+
+        score += hullStrength * 2
+
+        logger.themedPrint("\n🏆 Your score is \(score)", themes: Theme(graphicMode: .bold, foregroundColor: .pastelYellow, backgroundColor: .deepBlack))
     }
 }

@@ -97,6 +97,7 @@ class GameEngine {
 
         case .exitGame:
             player.speak(words: "See ya!")
+            spaceship.calculateScore()
             isStarted = false
             break
         }
