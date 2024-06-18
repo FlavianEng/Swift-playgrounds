@@ -1,6 +1,5 @@
 enum GameAction: String, CaseIterable {
-    case navigate = "Navigate through asteroids"
-    case collectMineral = "Collect mineral"
+    case navigateAndCollectMinerals = "Navigate through asteroids and collect minerals along the way"
     case viewCargo = "View Cargo – See your inventory"
     case goHome = "Go home – Repair spaceship"
     case exitGame = "Exit Game"
@@ -49,16 +48,12 @@ class GameEngine {
 
         for (index, action) in GameAction.allCases.enumerated() {
             let actionNumber = index + 1
-            if action == .collectMineral && asteroid.hasBeenCollected {
-                continue
-            }
 
             logger.themedPrint("\(actionNumber). ", action.rawValue, themes: indexTheme, nilTheme)
         }
 
         do {
-            let excludedActions = asteroid.hasBeenCollected ? [GameAction.collectMineral.rawValue] : []
-            let action = try logger.inputRange(acceptedValues: GameAction.allCases.map {$0.rawValue}, excludedValues: excludedActions)
+            let action = try logger.inputRange(acceptedValues: GameAction.allCases.map {$0.rawValue})
 
             logger.clearConsole()
             doAction(action: GameAction.allCases[action], asteroid: &asteroid)
@@ -67,39 +62,39 @@ class GameEngine {
         }
     }
 
-    func doAction(action: GameAction, asteroid: inout Asteroid) {
-        switch action {
-        case .viewCargo:
-            player.speak(words: "I want to \(action.rawValue.lowercased())")
-            spaceship.displayStatus()
-            break
+    func doAction(action: GameAction, asteroid: inout Asteroid, repeatAction: Int = 1) {
+        for _ in 0..<repeatAction {
+            switch action {
+            case .viewCargo:
+                player.speak(words: "I want to \(action.rawValue.lowercased())")
+                spaceship.displayStatus()
+                break
 
-        case .navigate:
-            player.speak(words: "I want to \(action.rawValue.lowercased())\n")
-            let hasExploded = spaceship.navigate(asteroid: asteroid)
+            case .navigateAndCollectMinerals:
+                player.speak(words: "I want to \(action.rawValue.lowercased())\n")
+                let hasExploded = spaceship.navigate(asteroid: asteroid)
 
-            if hasExploded {
+                if hasExploded {
+                    isStarted = false
+                    return
+                }
+
+                let (numberCollected, mineralType) = spaceship.collectMineral(asteroid: asteroid)
+                firstMate.speak(words: "You've harvest \(numberCollected) of \(mineralType.name)")
+
+                asteroid = Asteroid()
+                break
+
+            case .goHome:
+                player.speak(words: "Head to home mates!")
+                break
+
+            case .exitGame:
+                player.speak(words: "See ya!")
+                spaceship.calculateScore()
                 isStarted = false
+                break
             }
-
-            asteroid = Asteroid()
-            break
-
-        case .collectMineral:
-            player.speak(words: "I want to \(action.rawValue.lowercased())\n")
-            let (numberCollected, mineralType) = spaceship.collectMineral(asteroid: asteroid)
-            firstMate.speak(words: "You've harvest \(numberCollected) of \(mineralType.name)")
-            break
-
-        case .goHome:
-            player.speak(words: "Head to home mates!")
-            break
-
-        case .exitGame:
-            player.speak(words: "See ya!")
-            spaceship.calculateScore()
-            isStarted = false
-            break
         }
     }
 }
