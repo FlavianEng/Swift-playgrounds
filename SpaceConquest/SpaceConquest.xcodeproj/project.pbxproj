@@ -13,7 +13,7 @@
 		2DA7B5EB2C183F6F000239FB /* mineral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA7B5EA2C183F6F000239FB /* mineral.swift */; };
 		2DA7B5ED2C183F7B000239FB /* logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA7B5EC2C183F7B000239FB /* logger.swift */; };
 		2DA7B5EF2C183F81000239FB /* gameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA7B5EE2C183F81000239FB /* gameEngine.swift */; };
-		2DA7B5F42C1870A8000239FB /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA7B5F32C1870A8000239FB /* Character.swift */; };
+		2DA7B5F42C1870A8000239FB /* character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA7B5F32C1870A8000239FB /* character.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,7 +37,7 @@
 		2DA7B5EC2C183F7B000239FB /* logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = logger.swift; sourceTree = "<group>"; };
 		2DA7B5EE2C183F81000239FB /* gameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gameEngine.swift; sourceTree = "<group>"; };
 		2DA7B5F22C183F96000239FB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		2DA7B5F32C1870A8000239FB /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		2DA7B5F32C1870A8000239FB /* character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = character.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +77,7 @@
 				2DA7B5EC2C183F7B000239FB /* logger.swift */,
 				2DA7B5EE2C183F81000239FB /* gameEngine.swift */,
 				2DA7B5F22C183F96000239FB /* README.md */,
-				2DA7B5F32C1870A8000239FB /* Character.swift */,
+				2DA7B5F32C1870A8000239FB /* character.swift */,
 			);
 			path = spaceConquest;
 			sourceTree = "<group>";
@@ -117,7 +117,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2DA7B5D92C183EE4000239FB /* Build configuration list for PBXProject "spaceConquest" */;
+			buildConfigurationList = 2DA7B5D92C183EE4000239FB /* Build configuration list for PBXProject "SpaceConquest" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -142,7 +142,7 @@
 			files = (
 				2DA7B5EF2C183F81000239FB /* gameEngine.swift in Sources */,
 				2DA7B5E92C183F63000239FB /* spaceship.swift in Sources */,
-				2DA7B5F42C1870A8000239FB /* Character.swift in Sources */,
+				2DA7B5F42C1870A8000239FB /* character.swift in Sources */,
 				2DA7B5E22C183EE4000239FB /* main.swift in Sources */,
 				2D1E4C4D2C1C9154004543C0 /* asteroid.swift in Sources */,
 				2DA7B5EB2C183F6F000239FB /* mineral.swift in Sources */,
@@ -296,7 +296,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2DA7B5D92C183EE4000239FB /* Build configuration list for PBXProject "spaceConquest" */ = {
+		2DA7B5D92C183EE4000239FB /* Build configuration list for PBXProject "SpaceConquest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2DA7B5E32C183EE4000239FB /* Debug */,

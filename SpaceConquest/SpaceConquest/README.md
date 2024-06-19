@@ -34,3 +34,7 @@
     - [x] Expand the navigation logic to include different difficulty levels with varying chances of encountering asteroids and minerals.
     - [x] Introduce a scoring system based on collected minerals and remaining health.
  
+### Generation
+```zsh
+swift build -c release --show-bin-path
+```
