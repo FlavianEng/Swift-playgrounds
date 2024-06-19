@@ -1,7 +1,8 @@
 enum GameAction: String, CaseIterable {
     case navigateAndCollectMinerals = "Navigate through asteroids and collect minerals along the way"
     case viewCargo = "View Cargo – See your inventory"
-    case goHome = "Go home – Repair spaceship"
+    case repair = "Repair spaceship"
+    case howToPlay = "How to play?"
     case exitGame = "Exit Game"
 }
 
@@ -90,9 +91,22 @@ class GameEngine {
                 asteroid = Asteroid()
                 break
 
-            case .goHome:
+            case .repair:
                 player.speak(words: "Head to home mates!")
                 spaceship.repair()
+                break
+
+            case .howToPlay:
+                let titleTheme = Theme(graphicMode: .bold, foregroundColor: .deepBlack, backgroundColor: .pastelBlue)
+                let subtitleTheme = Theme(graphicMode: .bold, foregroundColor: nil, backgroundColor: nil)
+
+                logger.themedPrint(" How to play? ", themes: titleTheme)
+                logger.themedPrint("You're the captain on a spaceship venturing through an asteroid field. Your goal is to navigate safely by dodging asteroids and collecting valuable minerals. Your ship has 50 health points. If your health reaches 0, your ship explodes and the game is over. Your score will be displayed and you can restart the game to beat your best score.\n")
+
+                logger.themedPrint(" Possibles actions: ", themes: titleTheme)
+                logger.themedPrint("  - ", "Navigate and collect minerals: ", "As you navigate, you take between 1 and 25 damage and you mine the veins of asteroids in your path. By mining, you obtain a quantity (from 1 to 5) of a type of ore (from among 6 types of ore).", themes: nilTheme, subtitleTheme)
+                logger.themedPrint("  - ", "View Cargo: ", "Here you can view your spaceship health and minerals you have in your cargo.", themes: nilTheme, subtitleTheme)
+                logger.themedPrint("  - ", "Repair your spaceship: ", "During your navigation, you will suffer damage. You can repair your ship using minerals from your cargo. However, the materials you need to repair your ship are determined randomly. You will need between 1 and 3 types of minerals in the following quantities: 3, 1, 1 (if applicable). If you don't have enough materials, you have to continue to navigate and collect", themes: nilTheme, subtitleTheme)
                 break
 
             case .exitGame:

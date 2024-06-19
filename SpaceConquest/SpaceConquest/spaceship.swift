@@ -2,7 +2,7 @@
 class Spaceship {
     let name: String
     let logger: Logger
-    var hullStrength: Int = 50
+    var health: Int = 50
     var cargoHold: [Mineral: Int] = [:]
     private lazy var repairMaterials: ([Int], Set<Mineral>) = getRepairMaterial()
 
@@ -12,7 +12,7 @@ class Spaceship {
     }
 
     func takeDamage(amount: Int) {
-        hullStrength -= amount
+        health -= amount
     }
 
     func displayStatus() {
@@ -22,7 +22,7 @@ class Spaceship {
 
         logger.newLine()
         logger.themedPrint(" ** ", name, " ** ", themes: blackOnWhiteTheme, blueOnWhiteTheme)
-        logger.themedPrint("Hull strength: ", String(hullStrength), themes: itemTitle, logger.theme)
+        logger.themedPrint("Health: ", String(health), themes: itemTitle, logger.theme)
         logger.themedPrint("Cargo hold: ", themes: itemTitle)
 
         if cargoHold.isEmpty {
@@ -40,7 +40,7 @@ class Spaceship {
 
         print("You've taken \(asteroid.inflictedDamage) damage\(asteroid.inflictedDamage > 1 ? "s" : "")")
 
-        if hullStrength <= 0 {
+        if health <= 0 {
             explode()
             return true
         }
@@ -69,7 +69,7 @@ class Spaceship {
             score += mineral.value * quantity
         }
 
-        score += hullStrength * 2
+        score += health * 2
 
         logger.themedPrint("\n🏆 Your score is \(score)", themes: Theme(graphicMode: .bold, foregroundColor: .pastelYellow, backgroundColor: .deepBlack))
     }
@@ -95,7 +95,7 @@ class Spaceship {
             }
         }
 
-        hullStrength = 50
+        health = 50
         repairMaterials = getRepairMaterial()
     }
 
