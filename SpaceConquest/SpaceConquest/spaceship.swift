@@ -4,6 +4,7 @@ class Spaceship {
     let logger: Logger
     var hullStrength: Int = 50
     var cargoHold: [Mineral: Int] = [:]
+    private lazy var repairMaterials: ([Int], Set<Mineral>) = getRepairMaterial()
 
     init(name: String, logger: Logger) {
         self.name = name
@@ -61,13 +62,7 @@ class Spaceship {
         return (numberCollected, mineralType)
     }
 
-    private func explode() {
-        logger.themedPrint("\n💀 Your spaceship explode and no one will remember you ", themes: Theme(graphicMode: .bold, foregroundColor: .red, backgroundColor: .deepBlack))
-
-        calculateScore()
-    }
-
-    public func calculateScore() {
+    func calculateScore() {
         var score = 0
 
         for (mineral, quantity) in cargoHold {
@@ -77,5 +72,47 @@ class Spaceship {
         score += hullStrength * 2
 
         logger.themedPrint("\n🏆 Your score is \(score)", themes: Theme(graphicMode: .bold, foregroundColor: .pastelYellow, backgroundColor: .deepBlack))
+    }
+
+    func repair() {
+        for (index, mineral) in repairMaterials.1.enumerated() {
+            guard let mineralQuantity = cargoHold[mineral] else {
+                print("You don't have enough materials to repair your spaceship! – You don't have \(repairMaterials.0[index]) \(mineral.name)")
+                return
+            }
+
+            if mineralQuantity < repairMaterials.0[index] || (mineralQuantity - repairMaterials.0[index]) < 0 {
+                print("You don't have enough materials to repair your spaceship! – You don't have \(repairMaterials.0[index]) \(mineral.name)")
+                return
+            }
+        }
+
+        print("You have used:")
+        for (index, mineral) in repairMaterials.1.enumerated() {
+            print("  - ", repairMaterials.0[index], " ", mineral.name)
+            if let mineralQuantity = cargoHold[mineral] {
+                cargoHold[mineral] = mineralQuantity - repairMaterials.0[index]
+            }
+        }
+
+        hullStrength = 50
+        repairMaterials = getRepairMaterial()
+    }
+
+    private func getRepairMaterial() -> ([Int], Set<Mineral>) {
+        let neededQuantity = [3, 1, 1]
+        var neededMinerals = Set<Mineral>()
+
+        for _ in 0..<3 {
+            neededMinerals.insert(Mineral.getRandomMineral())
+        }
+
+        return (neededQuantity, neededMinerals)
+    }
+
+    private func explode() {
+        logger.themedPrint("\n💀 Your spaceship explode and no one will remember you ", themes: Theme(graphicMode: .bold, foregroundColor: .red, backgroundColor: .deepBlack))
+
+        calculateScore()
     }
 }

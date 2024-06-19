@@ -1,5 +1,4 @@
  # SpaceConquest
- 
  ## The Scenario 
  > You're the captain on a spaceship venturing through an asteroid field. Your goal is to navigate safely by dodging asteroids and collecting valuable minerals.
  
@@ -32,6 +31,6 @@
 
  * Bonus *
     - [x] Add a Mineral class to represent different minerals with varying values.
-    - [ ] Expand the navigation logic to include different difficulty levels with varying chances of encountering asteroids and minerals.
+    - [x] Expand the navigation logic to include different difficulty levels with varying chances of encountering asteroids and minerals.
     - [x] Introduce a scoring system based on collected minerals and remaining hull strength.
  

@@ -10,7 +10,7 @@ enum asteroidSize {
 class Asteroid {
     lazy var size: asteroidSize = getSize()
     lazy var inflictedDamage: Int = getInflictedDamage(asteroidSize: size)
-    lazy var vein: Mineral = getVein()
+    lazy var vein: Mineral = Mineral.getRandomMineral()
     var hasBeenCollected = false
 
     func mineVein() -> (Int, Mineral) {
@@ -19,7 +19,8 @@ class Asteroid {
         }
 
         hasBeenCollected = true
-        return (3, vein)
+
+        return (Int.random(in: 1...5), vein)
     }
 
     /// Chance of apparition
@@ -51,25 +52,6 @@ class Asteroid {
             return 15
         case .huge:
             return 25
-        }
-    }
-
-    /// Chance of apparition
-    /// Claudite 2% / Palladium 5% / Sphalerite 10% / Olivine 20% / Feldspar 25% / Iron 38%
-    private func getVein() -> Mineral {
-        switch Int.random(in: 0 ... 100) {
-        case 1...2:
-            return Claudite()
-        case 3...8:
-            return Palladium()
-        case 9...18:
-            return Sphalerite()
-        case 19...38:
-            return Olivine()
-        case 39...63:
-            return Feldspar()
-        default:
-            return Iron()
         }
     }
 }

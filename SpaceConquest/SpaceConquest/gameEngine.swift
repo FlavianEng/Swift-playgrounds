@@ -92,6 +92,7 @@ class GameEngine {
 
             case .goHome:
                 player.speak(words: "Head to home mates!")
+                spaceship.repair()
                 break
 
             case .exitGame:
