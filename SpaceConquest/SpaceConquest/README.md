@@ -1,7 +1,12 @@
  # SpaceConquest
  ## The Scenario 
  > You're the captain on a spaceship venturing through an asteroid field. Your goal is to navigate safely by dodging asteroids and collecting valuable minerals.
- 
+
+## Demo
+https://github.com/FlavianEng/Swift-playgrounds/assets/63726994/75243b54-a7e9-4f15-97e3-d098ac8b243b
+
+
+
  ## Classes 
  ### Spaceship
     **Properties:**
